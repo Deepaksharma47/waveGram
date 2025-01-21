@@ -12,6 +12,6 @@ userRoutes
     .post("/login",authValidation.loginValidationSchema,authController.loginUser)
     .get("/my-profile" ,jwtAuthMiddleware([constantValues.roles.adminRole,constantValues.roles.superAdminRole]),authController.getProfile )
     .put("/update-profile",jwtAuthMiddleware([  constantValues.roles.adminRole]),authController.updateProfile)
-    .post("/create-wave", jwtAuthMiddleware([constantValues.roles.adminRole]),waveMediaUploader.fields([{name:"wavePhoto"},{name:"waveVideo"}]),)
-
+    .post("/create-wave", jwtAuthMiddleware([constantValues.roles.adminRole]),waveMediaUploader.fields([{name:"wavePhoto"},{name:"waveVideo"}]), authController.createWave)
+    .get("/my-waves",jwtAuthMiddleware([  constantValues.roles.adminRole]),authController.getMyWave)
 export default userRoutes

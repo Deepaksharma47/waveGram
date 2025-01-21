@@ -44,6 +44,24 @@ const  updateProfile = catchAsyncError(async(req,res) =>{
     })
 })
 
+const  createWave = catchAsyncError(async(req,res) =>{
+    await userServices.createWave(req)
+    res.status(constantValues.msgCode.successCode).json({
+        success: constantValues.msgType.successStatus,
+        message: constantValues.msg.profileUpdate,
+
+    })
+})
+
+const getMyWave = catchAsyncError(async(req,res) =>{
+    const {waves} =await userServices.getMyWave(req);
+    res.status(constantValues.msgCode.successCode).json({
+        success: constantValues.msgType.successStatus,
+        message: constantValues.msg.waveFetchSuccessfully,
+        data: waves
+    })
+})
+
 
 
 
@@ -51,5 +69,7 @@ export default {
     referrerRegister,
     loginUser,
     getProfile,
-    updateProfile
+    updateProfile,
+    createWave,
+    getMyWave
 }

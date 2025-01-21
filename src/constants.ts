@@ -4,6 +4,9 @@ export const constantValues = {
         failedStatus: false,
     },
     msg: {
+        waveFetchUnsuccessful:"Unable to fetch waves",
+        waveFetchSuccessfully:"Successfully fetch wave data",
+        waveCreationFailed:"Unable to create wave",
         userCreated: "User created successfully",
         alreadyExist:"Email  already exist",
         invalidCredentials:"Invalid credentials",

@@ -1,6 +1,6 @@
 // wave attributes
 export interface WaveAttributes {
-    id : number;
+    id ? : number;
     wavePhoto?:string;
     waveVideo?:string;
     status : boolean;
@@ -16,3 +16,7 @@ export interface WaveCommentAttributes {
     adminId : number;
     deletedAt :  Date;
 }
+
+
+// create wavepayload interface
+
