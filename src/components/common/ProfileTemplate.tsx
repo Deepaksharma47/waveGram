@@ -14,7 +14,7 @@ interface ProfileTemplateInterface {
 const ProfileTemplate: React.FC<ProfileTemplateInterface> = ({ user, backgroundText, changeButton }) => {
   const pf = `https://api.dicebear.com/5.x/initials/svg?seed=${user?.firstName} ${user?.lastName}`
   return (
-    <div className="relative bg-yellowLion flex items-center justify-between h-36 my-2 rounded-lg">
+    <div className="relative bg-yellowLion flex items-center justify-between h-36 rounded-lg">
       {/* Background Text */}
       <div className="background-text absolute inset-0 flex items-center justify-center text-8xl font-bold opacity-5 text-nowrap">
         {backgroundText}

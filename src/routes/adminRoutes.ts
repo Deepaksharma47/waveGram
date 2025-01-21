@@ -1,4 +1,5 @@
 import Layout from "../Pages/Layout";
+import CreateWave from "../Pages/createWave/CreateWave";
 import Dashboard from "../Pages/dashboard/Dashboard";
 import Friends from "../Pages/friends/Friends";
 import InviteFriend from "../Pages/inviteFriend/InviteFriends";
@@ -24,6 +25,11 @@ const adminRoutes = [
         path: '/invite-friends',
         layout: Layout,
         component: InviteFriend,
+    },
+    {
+        path: '/create-waves',
+        layout: Layout,
+        component: CreateWave,
     }
     
 ];

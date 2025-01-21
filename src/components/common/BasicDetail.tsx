@@ -5,10 +5,13 @@ import { basicDetailValidation } from '../../validations/adminValidations';
 import { basicDetailAdminList } from '../../utils/adminlists';
 import { useSelector } from 'react-redux';
 import IconBtn from './IconBtn';
+import { useUpdateProfile } from '../../actions/user';
 
 
 const BasicDetail = () => {
     const { user } = useSelector((state: RootState) => state.Auth);
+
+    const updateDetail = useUpdateProfile()
     
     const initialValue = {
         firstName: user.firstName,
@@ -29,8 +32,7 @@ const BasicDetail = () => {
                 validationSchema={basicDetailValidation}
                 onSubmit={async (values: BasicDetailInterface) => {
                     console.log(values)
-                    // console.log("valuesvalues", values);
-                    // await signUpMutataion.mutate(values);
+                    updateDetail.mutate(values)
                 }}
             >
                 {() => (

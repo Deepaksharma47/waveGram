@@ -33,10 +33,8 @@ export const basicDetailValidation = Yup.object({
     .trim()
     .email("Invalid email address")
     .required("Email is required"),
-  mobileNumber: Yup.string()
-    .trim()
-    .optional()
-    .matches(/^\d{10}$/, "Mobile Number must be exactly 10 digits"),
+  mobileNumber: Yup.string().nullable()
+    .matches(/^\d{10}$/, " Number must be exactly 10 digits"),
   address: Yup.string()
     .trim()
     .required("Address is required"),

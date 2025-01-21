@@ -5,15 +5,10 @@ import  NothingFoundBackground  from './Pages/notFoundImage/NotFoundImage';
 import { useDispatch, useSelector } from 'react-redux';
 import adminRoutes from './routes/adminRoutes';
 import { RootState } from './interfaces/interfaces';
-// import { useQuery } from '@tanstack/react-query';
 import apiClient from './apis/apiClient';
 import { api } from './apis/apies';
-// import { getAccessToken } from './actions/token.action';
 import { setLoading,setLoggedIn, setUser, setUserType } from './Slices/userSlice';
 import Loading from './components/Loading';
-// import { useGetProfile, useLogout } from './actions/user';
-// import { setLoading, setUser, setUserType } from './Slices/userSlice';
-
 interface route{
   path: string;
   layout:React.FC<{ children: React.ReactNode }>;
@@ -27,6 +22,8 @@ function App() {
   const {user,isLoggedIn,isLoading,token} = useSelector((state:RootState) => state.Auth);
 
   const [initialRoutes, setInitialRoutes] = useState<Array<route>|null>()
+
+  const [loader, setLoader] = useState(true)
 
   useEffect(()=>{
     const fetchData = async () => {
@@ -55,7 +52,11 @@ function App() {
     }
   },[isLoggedIn,user?.roleId])
 
-  if(isLoading){
+  setTimeout(()=>{
+    setLoader(false)
+  },1000)
+
+  if(isLoading || loader){
     return(
       <Loading/>
     )

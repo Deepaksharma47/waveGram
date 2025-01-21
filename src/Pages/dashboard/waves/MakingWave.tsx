@@ -1,7 +1,7 @@
 // import React from 'react'
 import { useState } from "react"
 import { waves } from "./testwavedata"
-import Wave from './Wave'
+import Wave from '../../../components/common/WaveCard'
 import Modal from "./WaveModal"
 import { WaveInterface } from "../../../interfaces/interfaces"
 const MakingWave = () => {

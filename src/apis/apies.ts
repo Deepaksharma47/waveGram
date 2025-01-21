@@ -5,5 +5,7 @@ export const api = {
     loginUrl:  "/user/login",
     deshboard:"/user/dashboard",
     logout:"/user/logout",
-    getProfile:"/user/my-profile"
+    getProfile:"/user/my-profile",
+    updateProfile:"/user/update-profile",
+    createWave:"user/create-wave"
 }

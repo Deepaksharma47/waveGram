@@ -1,6 +1,6 @@
 import React from 'react'
-import { WaveInterface } from '../../../interfaces/interfaces'
-import { truncateString } from '../../../utils/helpingFunction'
+import { WaveInterface } from '../../interfaces/interfaces'
+import { truncateString } from '../../utils/helpingFunction'
 
 const Wave: React.FC<WaveInterface> = (wave) => {
     return (
