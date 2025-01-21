@@ -82,6 +82,7 @@ export interface WaveInterface {
     adminId:number;
     waveMessage:string;
     wavePhoto?:string;
+    createdBy?:number;
     admin:adminInterface;
     status : boolean
 }

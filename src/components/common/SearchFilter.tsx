@@ -6,11 +6,12 @@ import { FaSearch } from "react-icons/fa";
 interface SearchFilterProps {
     onSearch: (payload: { search: string }) => void;
     searchTitle?: string;
+    value:string
 }
 
-const SearchFilter: React.FC<SearchFilterProps> = ({ onSearch, searchTitle = "Name" }) => {
-    const [searchValue, setSearchValue] = useState("");
-    const debouncedSearchValue = useDebounce(searchValue, 400);
+const SearchFilter: React.FC<SearchFilterProps> = ({ onSearch, searchTitle = "Name" , value = "" }) => {
+    const [searchValue, setSearchValue] = useState(value);
+    const debouncedSearchValue = useDebounce(searchValue, 2000);
 
     const inputRef = useRef<any>()
 

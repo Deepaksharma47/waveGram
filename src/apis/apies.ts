@@ -7,5 +7,6 @@ export const api = {
     logout:"/user/logout",
     getProfile:"/user/my-profile",
     updateProfile:"/user/update-profile",
-    createWave:"user/create-wave"
+    createWave:"/user/create-wave",
+    getMyWave:"/user/my-waves"
 }

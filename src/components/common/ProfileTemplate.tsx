@@ -16,7 +16,7 @@ const ProfileTemplate: React.FC<ProfileTemplateInterface> = ({ user, backgroundT
   return (
     <div className="relative bg-yellowLion flex items-center justify-between h-36 rounded-lg">
       {/* Background Text */}
-      <div className="background-text absolute inset-0 flex items-center justify-center text-8xl font-bold opacity-5 text-nowrap">
+      <div className="background-text absolute inset-0 flex items-center justify-center sm:text-6xl md:text-7xl  lg:text-8xl font-bold opacity-5 text-nowrap">
         {backgroundText}
       </div>
 

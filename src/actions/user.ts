@@ -1,6 +1,6 @@
 // import { useDispatch } from "react-redux";
 import { BasicDetailInterface, loginInterface, signupInterface } from "../interfaces/interfaces";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { api } from "../apis/apies";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -15,10 +15,11 @@ import { setAccessToken } from "./token.action";
 export const useSingUp = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    dispatch(setLoading(true))
     return useMutation({
         mutationKey: ['signup'],
         mutationFn: async (data: signupInterface) => {
+            dispatch(setLoading(true))
+
             console.log("data,data,data", data)
             const response = await apiClient.post(api.signupUrl, data);
             console.log(response);
@@ -205,6 +206,7 @@ export const useLogout = () => {
 
 
 export const useCreateWave = () => {
+    const queryClient = useQueryClient()
     const dispatch = useDispatch()
     return useMutation({
         mutationKey: ['createWave'],
@@ -214,6 +216,7 @@ export const useCreateWave = () => {
             return response.data
         },
         onSuccess: () => {
+            queryClient.invalidateQueries(['search'])
             dispatch(setLoading(false))
             toast.success("Wave created")
         },
