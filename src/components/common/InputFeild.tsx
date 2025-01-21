@@ -14,12 +14,13 @@ interface inputField{
     isRequired:boolean;
     options?:Array<Option>;
     disabled?:boolean
-    value?:string
+    value?:string;
+    key?:number
 }
 
-const InputFeild = ({fieldName,placeholder,type,labelName,options =[],isRequired, disabled = false , value =""}:inputField) => {
+const InputFeild = ({fieldName,placeholder,type,labelName,options =[],isRequired, disabled = false , value ="",key}:inputField) => {
   return (
-    <div className="flex flex-col gap-1 text-start m-0 w-full">
+    <div className="flex flex-col gap-1 text-start m-0 w-full" key={key}>
         {/* Label */}
         <label htmlFor={fieldName} className=" text-sm font-medium text-gray-500">
         {labelName} 

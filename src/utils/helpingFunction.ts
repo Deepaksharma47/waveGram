@@ -1,3 +1,4 @@
+import imageCompression from "browser-image-compression";
 
 // change the string to lower case and add "-" between each word instead of space
 // My Profile -> my-profile
@@ -43,3 +44,27 @@ export function truncateString(str: string, maxLength: number): string {
 export function removeQuotes(str: string): string {
     return str.replace(/"/g, '');
   }
+
+
+
+// resize and compressed image
+
+export const compressAndResizeImage = async (
+  file: File,
+  maxSizeMB: number = 1,
+  maxWidthOrHeight: number = 1920
+): Promise<File> => {
+  const options = {
+    maxSizeMB: maxSizeMB, // Maximum file size in MB
+    maxWidthOrHeight: maxWidthOrHeight, // Maximum width or height
+    useWebWorker: true, // Use web workers for better performance
+  };
+
+  try {
+    const compressedFile = await imageCompression(file, options);
+    return compressedFile;
+  } catch (error) {
+    console.error("Error compressing the image:", error);
+    throw error;
+  }
+};

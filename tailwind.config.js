@@ -14,7 +14,7 @@ export default {
         yellowLion:"#BEA16E",
         darkYellowLion:"#93794D",
         lightGray:"#929292",
-        grayBackground:"#f4f5fa",
+        grayBackground:"#f2f3f7",
         greenAcc:"#49A15C",
         pending:"#B18D4B",
         grayCard:"#EEF5F6",

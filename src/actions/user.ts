@@ -1,6 +1,6 @@
 // import { useDispatch } from "react-redux";
-import { loginInterface, signupInterface } from "../interfaces/interfaces";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { BasicDetailInterface, loginInterface, signupInterface } from "../interfaces/interfaces";
+import { useMutation } from "@tanstack/react-query";
 import { api } from "../apis/apies";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -14,6 +14,8 @@ import { setAccessToken } from "./token.action";
 //custom hooks for signUp
 export const useSingUp = () => {
     const navigate = useNavigate()
+    const dispatch = useDispatch()
+    dispatch(setLoading(true))
     return useMutation({
         mutationKey: ['signup'],
         mutationFn: async (data: signupInterface) => {
@@ -23,10 +25,14 @@ export const useSingUp = () => {
             return response.data;
         },
         onSuccess: (response) => {
-            toast.success("Register Success");
-            navigate("/login", {
-                state: { email: response?.data?.email }
-            })
+            setTimeout(() => {
+                dispatch(setLoading(false))
+                toast.success("Register Success");
+                navigate("/login", {
+                    state: { email: response?.data?.email }
+                })
+            }, 500);
+
         },
         onError: (err) => {
             if (err instanceof AxiosError && err.response) {
@@ -57,8 +63,11 @@ export const useLogin = () => {
             dispatch(setUser(response?.data))
             dispatch(setUserType(response?.data?.roleId))
             dispatch(setLoggedIn(true));
-            dispatch(setLoading(false))
-            toast.success("logged In")
+            setTimeout(() => {
+                dispatch(setLoading(false))
+                toast.success("logged In")
+            }, 1000)
+
             navigate("/dashboard")
         },
         onError: (err) => {
@@ -74,29 +83,56 @@ export const useLogin = () => {
 
 // getUserProfile for rendering
 
-const getProfileFn = async () => {
-    const response = await apiClient.get(api.getProfile)
-    console.log(response)
-    return response.data
-}
-export const getMyProfile = () => {
-    return (dispatch: any) => {
-        try {
-            getProfileFn()
-                .then((response: any) => {
-                    dispatch(setLoggedIn(true))
-                    dispatch(setUser(response?.data?.data))
-                    dispatch(setUserType(response?.data?.data?.roleId))
-                    dispatch(setLoading(false))
-                }).catch(() => {
-                    dispatch(logout())
-                })
-        } catch (err) {
-            if(err){
-                dispatch(logout())
+// const getProfileFn = async () => {
+//     const response = await apiClient.get(api.getProfile)
+//     console.log(response)
+//     return response.data
+// }
+// export const getMyProfile = () => {
+//     return (dispatch: any) => {
+//         try {
+//             getProfileFn()
+//                 .then((response) => {
+//                     dispatch(setLoggedIn(true))
+//                     dispatch(setUser(response?.data?.data))
+//                     dispatch(setUserType(response?.data?.data?.roleId))
+//                     dispatch(setLoading(false))
+//                 }).catch(() => {
+//                     dispatch(logout())
+//                 })
+//         } catch (err) {
+//             if(err){
+//                 dispatch(logout())
+//             }
+//         }
+//     }
+// }
+
+export const useUpdateProfile = () => {
+    const dispatch = useDispatch()
+    return useMutation({
+        mutationKey: ["udpateProfile"],
+        mutationFn: async (data: BasicDetailInterface) => {
+            dispatch(setLoading(true));
+            const response = await apiClient.put(api.updateProfile, data)
+            return response?.data
+        },
+        onSuccess: (response) => {
+            // getMyProfile();
+            dispatch(setUser(response?.data));
+            setTimeout(() => {
+                dispatch(setLoading(false))
+            }, 500);
+        },
+        onError: (err) => {
+            if (err instanceof AxiosError && err.response) {
+                toast.error(err.response?.data?.message)
+            } else {
+                console.error('An unexpected error occurred');
             }
+            dispatch(logout())
         }
-    }
+    })
 }
 // const dispatch = useDispatch();
 //     // dispatch(setLoading(true))
@@ -136,7 +172,7 @@ export const getMyProfile = () => {
 //     })
 // }
 
-
+// Logout hook
 export const useLogout = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate()
@@ -148,8 +184,11 @@ export const useLogout = () => {
         },
         onSuccess: () => {
             dispatch(logout());
-            toast.success("Logged out")
-            dispatch(setLoading(false));
+
+            setTimeout(() => {
+                dispatch(setLoading(false))
+                toast.success("Logged out")
+            }, 700)
             navigate("/login")
         },
         onError: (err) => {
@@ -164,6 +203,30 @@ export const useLogout = () => {
     })
 }
 
+
+export const useCreateWave = () => {
+    const dispatch = useDispatch()
+    return useMutation({
+        mutationKey: ['createWave'],
+        mutationFn: async (data:FormData) => {
+            dispatch(setLoading(true))
+            const response = await apiClient.post(api.createWave, data)
+            return response.data
+        },
+        onSuccess: () => {
+            dispatch(setLoading(false))
+            toast.success("Wave created")
+        },
+        onError: (err) => {
+            if (err instanceof AxiosError && err.response) {
+                toast.error(err.response?.data?.message)
+            } else {
+                console.error('An unexpected error occurred');
+            }
+            dispatch(setLoading(false))
+        }
+    })
+}
 // export const checkuser = (callback: unknown) => {
 //     return (dispatch:unknown) => {
 //         const tokenRaw: unknown= getAccessToken();

@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Create an Axios instance
 const apiClient = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL , // Set your API base URL
+  baseURL: import.meta.env.VITE_API_BASE_URL, // Set your API base URL
   timeout: 10000, // Set a timeout for requests
 });
 
@@ -13,6 +13,14 @@ apiClient.interceptors.request.use(
     if (token) {
       config.headers.Authorization = `Bearer ${token}`; // Add the Bearer token to the headers
     }
+
+    // Dynamically set Content-Type based on the request data
+    if (config.data instanceof FormData) {
+      config.headers['Content-Type'] = 'multipart/form-data';
+    } else if (!config.headers['Content-Type']) {
+      config.headers['Content-Type'] = 'application/json';
+    }
+
     return config;
   },
   (error) => {
@@ -37,6 +45,7 @@ apiClient.interceptors.response.use(
 );
 
 export default apiClient;
+
 
 
 
