@@ -57,9 +57,23 @@ const getProfile = async (id:number) => {
     return {admin:admin.toSafeObject()}
 }
 
+const  updateProfile = async (id:number,data:any) => {
+    console.log("updated profile me aya hoda")
+    let admin = await Admin.findOne({where:{id:id, isDeleted:false, isActive:true}})
+
+    if(!admin){
+        throw new AppError(constantValues.msg.userNotExist,constantValues.msgCode.failureCode)
+    }
+    
+    await admin.update(data);
+
+    return {admin:admin.toSafeObject()}
+}
+
 
 export default {
     registerAdmin,
     loginAdmin,
-    getProfile
+    getProfile,
+    updateProfile
 }

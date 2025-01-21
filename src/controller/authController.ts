@@ -29,14 +29,27 @@ const getProfile = catchAsyncError(async(req,res) =>{
     const {admin} = await  userServices.getProfile(user?.id);
     res.status(constantValues.msgCode.successCode).json({
         success: constantValues.msgType.successStatus,
-        message: constantValues.msg.getProfileMessage,
+        message: constantValues.msg.profileFetch,
+        data:admin
+    })
+})
+
+const  updateProfile = catchAsyncError(async(req,res) =>{
+    const user : any = req.user;
+    const {admin} = await userServices.updateProfile(user?.id, req.body)
+    res.status(constantValues.msgCode.successCode).json({
+        success: constantValues.msgType.successStatus,
+        message: constantValues.msg.profileUpdate,
         data:admin
     })
 })
 
 
+
+
 export default {
     referrerRegister,
     loginUser,
-    getProfile
+    getProfile,
+    updateProfile
 }

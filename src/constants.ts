@@ -27,7 +27,6 @@ export const constantValues = {
         removedOrBlocked: "Your account is currently removed or inactive. Please contact support for further help",
         inactiveUser:"Contact support for activate your account",
         secretKeyMissing:'JWT_SECRET_KEY is missing',
-        getProfileMessage:"Successfully get profile"
 
     },
 

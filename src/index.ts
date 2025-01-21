@@ -16,6 +16,7 @@ app.use(cors({
 app.use(express.json());
 app.use(passport.initialize())
 app.use("/api/v1", allRoutes)
+app.use('/uploads', express.static('uploads'));
 db.sequelize; 
 
 app.get("/", (req : Request, res:any) => res.json({ success: true, message: "Server is Running"}));
