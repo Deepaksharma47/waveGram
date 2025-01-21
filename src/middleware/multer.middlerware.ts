@@ -7,7 +7,7 @@ const storage = multer.diskStorage({
         const dir = "uploads"
         if(!fs.existsSync(dir)){
             fs.mkdirSync(dir, { recursive: true });
-            
+
         }
         cb(null, dir);
     },
@@ -18,13 +18,14 @@ const storage = multer.diskStorage({
 })
 
 
-const imagaeuploader = multer({
+const waveMediaUploader = multer({
     storage:storage,
     limits:{
         fileSize: 1024*1024*45 // 45MB in bytes (45 * 1024 * 1024)
     },
     fileFilter:(req, file, cb) =>{
-        const allowedExtensions = /\.(jpg|jpeg|png|pdf|webp|mpeg|mp3|mp4)$/i;
+        // const allowedExtensions = /\.(jpg|jpeg|png|pdf|webp|mpeg|mp3|mp4)$/i;
+        const  allowedExtensions = /\.(jpg|jpeg|png|pdf|webp|mpeg|mp3|mp4|avi|mov)$/i
 
         if(!file.originalname.match(allowedExtensions)){
             if(file.fieldname === "document"){
@@ -56,4 +57,4 @@ const imagaeuploader = multer({
     }
 })
 
-export default  imagaeuploader;
+export default  waveMediaUploader;

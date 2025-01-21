@@ -4,7 +4,7 @@ import { AppError } from "../utils";
 import { constantValues } from "../constants";
 
 // Middleware for role-based JWT authentication
-export const jwtAuthMiddleware = (allowedRoles: number) => (
+export const jwtAuthMiddleware = (allowedRoles: Array<number>) => (
   req: Request,
   res: Response,
   next: NextFunction
@@ -20,7 +20,7 @@ export const jwtAuthMiddleware = (allowedRoles: number) => (
     }
 
     // Check user role
-    if (user.roleId === allowedRoles) {
+    if (allowedRoles.includes(user.roleId)) {
       req.user = user; // Attach user to the request
       return next();   // Proceed to the next middleware
     }
