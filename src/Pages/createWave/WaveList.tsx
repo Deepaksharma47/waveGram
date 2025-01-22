@@ -14,36 +14,32 @@ const WaveList = () => {
     });
 
 
-    const { data, isLoading, isError,error } = useSearchQuery(params.search, {
+    const { data, isLoading, isFetching, isError, error, refetch } = useSearchQuery(params.search, {
         limit: params.limit,
         page: params.page,
     });
 
     const handleSearch = (payload: { search: string }) => {
         setParams((prev) => ({ ...prev, search: payload.search })); // Update search param
+        refetch()
     };
 
-    if (isLoading) {
-        return (
-            <div className="absolute inset-0 flex items-center justify-center bg-white bg-opacity-75 z-10">
-                    <div className="loader"></div> {/* Spinner styles */}
-                </div>
-        )
-    }
-    if(isError){
+    if (isError) {
         console.log(error)
     }
     return (
         <div className=' flex flex-col gap-5'>
-            <SearchFilter onSearch={handleSearch} searchTitle='Search' value = {params.search} />
+            <SearchFilter onSearch={handleSearch} searchTitle='Search' />
             <div className='flex flex-col gap-4'>
-            {
-                data && data?.data?.map((wave : WaveInterface,index:number) =>{
-                    return (
-                        <WaveDisplayCard data={wave} key={index}/>
-                    )
-                })
-            }
+                {(isLoading || isFetching) ? (
+                    <div className="flex justify-center items-center">
+                        <p>Loading...</p> {/* Replace with a loader component if available */}
+                    </div>
+                ) : (
+                    data && data.data.map((wave: WaveInterface, index: number) => (
+                        <WaveDisplayCard data={wave} key={index} />
+                    ))
+                )}
             </div>
 
         </div>
