@@ -30,6 +30,7 @@ const Friends = () => {
                 <div className='flex justify-between'>
                     <SearchFilter
                         onSearch={() => { }}
+                        searchTitle='Name, Email'
                     />
                     <IconBtn
                         text={"Invite Friend"}
@@ -38,7 +39,7 @@ const Friends = () => {
                         }}
                     />
                 </div>
-                <div className=' grid  grid-cols-2 gap-x-6 gap-y-4 my-6'>
+                <div className=' grid  lg:grid-cols-2 grid-cols-1 gap-x-6 gap-y-4 my-6'>
                     {
                         users.map((user, index) => (
                             <FriendsCard data={user} key={index}/>
