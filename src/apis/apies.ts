@@ -8,5 +8,6 @@ export const api = {
     getProfile:"/user/my-profile",
     updateProfile:"/user/update-profile",
     createWave:"/user/create-wave",
-    getMyWave:"/user/my-waves"
+    getMyWave:"/user/my-waves",
+    inviteFriend:"/user/invite-friend"
 }

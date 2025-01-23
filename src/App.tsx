@@ -7,7 +7,7 @@ import adminRoutes from './routes/adminRoutes';
 import { RootState } from './interfaces/interfaces';
 import apiClient from './apis/apiClient';
 import { api } from './apis/apies';
-import { setLoading,setLoggedIn, setUser, setUserType } from './Slices/userSlice';
+import { logout, setLoading,setLoggedIn, setUser, setUserType } from './Slices/userSlice';
 import Loading from './components/Loading';
 interface route{
   path: string;
@@ -27,14 +27,18 @@ function App() {
 
   useEffect(()=>{
     const fetchData = async () => {
-      dispatch(setLoading(true))
-      const response = await apiClient.get(api.getProfile);
-      dispatch(setLoggedIn(true))
-      dispatch(setUser(response?.data?.data))
-      dispatch(setUserType(response?.data?.data?.roleId))
-      dispatch(setLoading(false))
+      try{
+        dispatch(setLoading(true))
+        const response = await apiClient.get(api.getProfile);
+        dispatch(setLoggedIn(true))
+        dispatch(setUser(response?.data?.data))
+        dispatch(setUserType(response?.data?.data?.roleId))
+        dispatch(setLoading(false))
+      } catch(err){
+        console.log(err)
+        dispatch(logout())
+      }
     };
-
     if(token){
       fetchData()
     }

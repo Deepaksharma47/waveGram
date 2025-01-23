@@ -12,7 +12,7 @@ interface  IState {
 
 const intilaState:IState = {
     userType:  null,
-    token:  localStorage.getItem("token") ,
+    token:  localStorage.getItem("token"),
     user:   null,
     isLoading:false,
     isLoggedIn: false,

@@ -10,10 +10,11 @@ import { useEffect, useState } from "react"
 import { useLogin } from "../../actions/user"
 
 const Login: React.FC = () => {
-    const navigate = useNavigate();
-
-
+    const navigate = useNavigate(); 
     const location = useLocation();
+
+
+
     const { email } = location.state || ""; // Get email from location.state
     const [initialValue, setInitialValue] = useState({
         email: email,
@@ -54,7 +55,7 @@ const Login: React.FC = () => {
 
                             <div className="text-sm text-gray-500 my-2  ">
                                 <button type="button" className=" text-linkText font-bold   " onClick={() => {
-                                    navigate("/")
+                                    navigate("/signup")
                                 }}>
                                     Sing up
                                 </button>

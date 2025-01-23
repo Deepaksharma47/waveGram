@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import SearchFilter from '../../components/common/SearchFilter'
 import { useSearchQuery } from '../../actions/waveActions';
 import WaveDisplayCard from '../../components/common/WaveDisplayCard';
@@ -23,6 +23,10 @@ const WaveList = () => {
         setParams((prev) => ({ ...prev, search: payload.search })); // Update search param
         refetch()
     };
+
+    useEffect(()=>{
+        refetch()
+    },[])
 
     if (isError) {
         console.log(error)

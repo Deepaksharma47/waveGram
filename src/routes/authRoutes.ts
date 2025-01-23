@@ -5,12 +5,12 @@ import SingUp from "../Pages/signup/SingUp";
 
 const AuthRoutes = [
     {
-        path: '/',
+        path: '/signup/*',
         layout: Form,
         component: SingUp ,
     },
     {
-        path: '/login',
+        path: '/login/*',
         layout: Form,
         component: Login,
     }

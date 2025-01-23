@@ -55,7 +55,7 @@ export const inviteFriendSchema = Yup.object().shape({
   friends: Yup.array()
     .of(
       Yup.object().shape({
-        name: Yup.string().required("Name is required"),
+        name: Yup.string().required("Name is required").min(3,"Name should be greater than 3"),
         email: Yup.string().email("Invalid email").required("Email is required"),
         message: Yup.string().optional(),
       })

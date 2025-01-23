@@ -41,6 +41,8 @@ export const useSingUp = () => {
             } else {
                 console.error('An unexpected error occurred');
             }
+            dispatch(setLoading(false))
+
             console.log(err)
         }
     })
@@ -54,12 +56,10 @@ export const useLogin = () => {
         mutationKey: ['login'],
         mutationFn: async (data: loginInterface) => {
             dispatch(setLoading(true));
-            console.log("apiurl apiurl apiurl")
             const response = await apiClient.post(api.loginUrl, data)
             return response.data;
         },
         onSuccess: (response) => {
-            console.log(response.data)
             setAccessToken(response?.token)
             dispatch(setUser(response?.data))
             dispatch(setUserType(response?.data?.roleId))
@@ -77,10 +77,13 @@ export const useLogin = () => {
             } else {
                 console.error('An unexpected error occurred');
             }
+            dispatch(setLoading(false))
+
             dispatch(logout())
         }
     })
 }
+
 
 // getUserProfile for rendering
 
@@ -131,6 +134,8 @@ export const useUpdateProfile = () => {
             } else {
                 console.error('An unexpected error occurred');
             }
+            dispatch(setLoading(false))
+
             dispatch(logout())
         }
     })
@@ -204,6 +209,7 @@ export const useLogout = () => {
     })
 }
 
+// 
 
 export const useCreateWave = () => {
     const queryClient = useQueryClient()

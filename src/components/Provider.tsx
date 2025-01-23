@@ -35,7 +35,7 @@ const Providers: React.FC<ProvidersProps> = ({ children }) => {
         <QueryClientProvider client={queryClient}>
           <MantineProvider>
             {children}
-            <ToastContainer />
+            <ToastContainer autoClose={1700} pauseOnFocusLoss={false} />
           </MantineProvider>
         </QueryClientProvider>
       </Provider>

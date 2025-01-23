@@ -1,4 +1,4 @@
-import React from "react";
+import React, {  } from "react";
 // import { useNavigate } from "react-router-dom";
 import { Formik, Form, FieldArray } from "formik";
 
@@ -6,42 +6,27 @@ import BackpageHeading from "../../components/common/BackpageHeading";
 import { inviteFriendSchema } from "../../validations/adminValidations";
 import InputFeild from "../../components/common/InputFeild";
 import IconBtn from "../../components/common/IconBtn";
+import { useInviteFriend } from "../../actions/waveActions";
 
+interface InviteFriend {
+    name: string;
+    email: string;
+    message?:string;
+}
+export interface InviteFriendInterface {
+    friends : InviteFriend[];
+}
 
 
 const InviteFriend: React.FC = () => {
-    //   const navigate = useNavigate();
+    
+    const {mutate,} = useInviteFriend()
 
-
-
-    //   const inviteFriend = async(friend:any)=>{
-    //     try{
-    //       const response = await api.post(`${Local.INVITE_FRIEND}`, friend, {
-    //         headers: {
-    //           "Authorization": `Bearer ${localStorage.getItem('token')}`
-    //         }
-    //       });
-    //       toast.success(`${response.data.message}`);
-    //       navigate('/app/dashboard')
-    //     }
-    //     catch(err:any){
-    //       toast.error(`${err.response.data.message}`);
-    //     }
-    //     return;
-    //   }
-
-    //   const inviteMutation = useMutation({
-    //     mutationFn: inviteFriend
-    //   })
-
-    const initialValues = {
+    const initialValues:InviteFriendInterface = {
         friends: [{ name: "", email: "", message: "" }],
     };
 
-    //   const handleSubmit = (values: any) => {
-    //     inviteMutation.mutate(values.friends);
-    //     // console.log("Submitted Data:", values);
-    //   };
+    
 
     return (
         <div className="flex flex-col gap-2 mx-6 mt-5 overflow-visible" >
@@ -55,7 +40,8 @@ const InviteFriend: React.FC = () => {
                     initialValues={initialValues}
                     validationSchema={inviteFriendSchema}
                     onSubmit={(values) => {
-                        console.log(values)
+                        console.log(values);
+                        mutate(values);
                     }}
                 >
                     {({ values }) => (
@@ -70,7 +56,7 @@ const InviteFriend: React.FC = () => {
                                                     {index > 0 && (
                                                         <button
                                                             type="button"
-                                                            className="btn btn-link text-danger ms-2 p-0"
+                                                            className=" font-semibold text-white bg-red-500 rounded-full px-3 ms-2 p-0"
                                                             onClick={() => remove(index)}
                                                         >
                                                             Remove
