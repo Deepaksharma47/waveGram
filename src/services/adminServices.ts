@@ -5,9 +5,14 @@ import { Op } from "sequelize";
 
 import Admin from "../models/admin.model";
 import { sendMail } from "../config/mailConnect";
-import { generateToken } from "./tokenServices";
+import { createUserDataToken, generateToken } from "./tokenServices";
 import Wave from "../models/wave.model";
 import { WaveAttributes } from "../interfaces/interfaces";
+import Friend from "../models/friend.model";
+import { loginInviteTemplate } from "../emailTemplates/inviteLinkTemplate";
+import FriendRequest from "../models/request.model";
+import { signupInviteTemplate } from "../emailTemplates/inviteSignupTemplate";
+import mail from "@sendgrid/mail";
 
 const registerAdmin = async (user: any) => {
     const { firstName, lastName, email, password, roleId = 1 } = user;
@@ -134,11 +139,59 @@ const getMyWave = async (req:any) =>{
 }
 
 
+
+
+
+// ************************INVITATION OF BECOME A FRINED*******************************//
+const inviteFriend = async (req:any) =>{
+    const { id } = req.user;
+
+    const mainUser = await Admin.findByPk(id)
+
+    const {friends} = req.body;
+
+    await friends?.map(async (friend:any) =>{
+        const existedUser:any = await Admin.findOne({where:{ email:friend.email,isActive:true }});
+
+        if(existedUser){
+            const alreadyfriend = await Friend.findOne({where:{[Op.or]:[
+                {[Op.and]:[
+                    {friend1:id},
+                    {friend2:existedUser?.id}
+                ]},
+                {[Op.and]:[
+                    {friend1:existedUser.id},
+                    {friend2:id}
+                ]}
+            ]}});
+            if(!alreadyfriend){
+                const newFriend = await Friend.create({friend1:id,friend2:existedUser?.id})
+                const token = await createUserDataToken({email:existedUser?.email,firstName:existedUser?.firstName,lastName:existedUser?.lastName})
+                const mailTempalte = loginInviteTemplate(`${process.env.WEB_BASE_URL}/login/${id}/${token}`,`${existedUser?.firstName} ${existedUser?.lastName}`,`${mainUser?.firstName} ${mainUser?.lastName}`)
+                sendMail(existedUser?.email,"Connection Invitation",mailTempalte)
+                return
+            }
+        }
+        else{
+            const firstname = friend.name.split(' ')[0];
+            const lastname = friend.name.split(' ')[1];
+            const createRequest  = await FriendRequest.create({senderId:id,recevierFirstName:firstname,recevierLastName:friend?.lastname,receiverEmail:friend?.email,message:friend?.message,status:false})
+            const token = await createUserDataToken({email:friend?.email,firstName:firstname,lastName:lastname})
+            const mailTempalte = signupInviteTemplate(`${process.env.WEB_BASE_URL}/signup/${id}/${token}`,`${firstname} ${lastname}`,`${mainUser?.firstName} ${mainUser?.lastName}`)
+            sendMail(friend?.email,"Connection Invitation", mailTempalte)
+            return
+        }
+
+
+    })
+}
+
 export default {
     registerAdmin,
     loginAdmin,
     getProfile,
     updateProfile,
     createWave,
-    getMyWave
+    getMyWave,
+    inviteFriend
 }

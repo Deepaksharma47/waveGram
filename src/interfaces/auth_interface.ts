@@ -31,3 +31,13 @@ export interface FriendAttributed {
   isDeleted?: boolean; // Defaults to false
   deletedAt?:  Date | null; // Nullable
 }
+
+export interface RequestInterface {
+  id: number; // Optional because it's auto-incremented
+  senderId: number;
+  recevierFirstName: string;
+  recevierLastName: string;
+  receiverEmail:string;
+  message?:string;
+  status:boolean
+}

@@ -62,6 +62,14 @@ const getMyWave = catchAsyncError(async(req,res) =>{
     })
 })
 
+const inviteFriend = catchAsyncError(async(req,res) =>{
+    await userServices.inviteFriend(req);
+    res.status(constantValues.msgCode.successCode).json({
+        success: constantValues.msgType.successStatus,
+        message: constantValues.msg.waveFetchSuccessfully,
+    })
+})
+
 
 
 
@@ -71,5 +79,6 @@ export default {
     getProfile,
     updateProfile,
     createWave,
-    getMyWave
+    getMyWave,
+    inviteFriend
 }

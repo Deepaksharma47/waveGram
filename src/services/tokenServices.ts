@@ -3,6 +3,7 @@ import { AdminAttributes } from '../interfaces/auth_interface';
 import Token from '../models/token.model';
 import { AppError } from '../utils';
 import { constantValues } from '../constants';
+import { promises } from 'dns';
 
 const generateToken = async (user: AdminAttributes): Promise<string> => {
     if (!process.env.JWT_SECRET_KEY) {
@@ -16,7 +17,7 @@ const generateToken = async (user: AdminAttributes): Promise<string> => {
     };
 
     const token = jwt.sign(payload, process.env.JWT_SECRET_KEY, {
-        expiresIn: '1d',
+        expiresIn: '1h',
     });
 
     await Token.create({ token: token, adminId: user?.id });
@@ -49,5 +50,22 @@ const handleExpiredToken = async (authHeader: string | undefined): Promise<void>
 };
 
 
-export { generateToken, verifyTokenInDb, handleExpiredToken };
+interface UserDataPayLoad {
+    email: string;
+    firstName:string;
+    lastName:string;
+}
+
+const createUserDataToken = async (payload:UserDataPayLoad) =>{
+    if (!process.env.JWT_USER_DATA) {
+        throw new AppError(constantValues.msg.secretKeyMissing, constantValues.msgCode.badRequest);
+    }
+
+    const token = jwt.sign(payload, process.env.JWT_USER_DATA);
+
+    return token;
+}
+
+
+export { generateToken, verifyTokenInDb, handleExpiredToken,createUserDataToken };
 

@@ -14,4 +14,10 @@ userRoutes
     .put("/update-profile",jwtAuthMiddleware([  constantValues.roles.adminRole]),authController.updateProfile)
     .post("/create-wave", jwtAuthMiddleware([constantValues.roles.adminRole]),waveMediaUploader.fields([{name:"wavePhoto"},{name:"waveVideo"}]), authController.createWave)
     .get("/my-waves",jwtAuthMiddleware([  constantValues.roles.adminRole]),authController.getMyWave)
+
+
+
+
+    // Friend controller
+    .post("/invite-friend",jwtAuthMiddleware(([  constantValues.roles.adminRole])),authController.inviteFriend)
 export default userRoutes
