@@ -10,8 +10,10 @@ const Layout: React.FC<UserProfileProps> = ({ children }) => {
 
   return (
     <div className=" flex flex-row h-screen">
-      <Sidebar />
-      <div className="flex flex-col w-full h-screen">
+      <div className=" md:w-1/4 w-0 ease-in-out duration-200">
+        <Sidebar />
+      </div>
+      <div className="flex flex-col w-full h-screen"> 
         {/* Header */}
         <div className="flex-shrink-0">
           <Header />

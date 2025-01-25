@@ -30,7 +30,7 @@ const Sidebar = () => {
     }, [user, sideBarList])
 
     return (
-        <nav className=" flex flex-col bg-primary border-t-[1px] h-screen w-1/4 py-3">
+        <nav className=" flex flex-col bg-primary border-t-[1px] h-screen w-full py-3">
             <Link to="/dashboard" className="flex items-center justify-center p-2">
                 <img src={logo} alt="WaveGram" className="h-20 mt-1 mb-3" />
             </Link>
